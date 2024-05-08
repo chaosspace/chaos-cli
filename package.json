@@ -1,0 +1,32 @@
+{
+	"name": "chaos-cli",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "tsup src/cli.ts --watch",
+		"build": "tsup --minify",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"bin": {
+		"chaos": "dist/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"cac": "^6.7.14",
+		"picocolors": "^1.0.0",
+		"tsup": "^8.0.2"
+	},
+	"devDependencies": {
+		"@types/cross-spawn": "^6.0.6",
+		"@types/node": "^20.12.10",
+		"@types/prompts": "^2.4.9",
+		"cross-spawn": "^7.0.3",
+		"fast-glob": "^3.3.2",
+		"locate-path": "^7.2.0",
+		"prompts": "^2.4.2",
+		"typescript": "^5.4.5"
+	}
+}

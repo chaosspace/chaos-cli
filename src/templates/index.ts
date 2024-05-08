@@ -1,0 +1,105 @@
+import path from "path";
+import { PackageManager, copy, install } from "../utils/helper";
+import { br, info } from "../utils/logger";
+import { writeFile } from "fs/promises";
+import os from "node:os";
+import { cyan } from "picocolors";
+
+interface InstallTemplateArgs {
+	appName: string;
+	root: string;
+	template: "tailwind" | "normal";
+	packageManager: PackageManager;
+}
+
+export const installTemplate = async ({
+	appName,
+	root,
+	template,
+	packageManager,
+}: InstallTemplateArgs) => {
+	info(`Using ${packageManager}`);
+	br();
+	info(`Initializing project with template: ${template}\n`);
+
+	const templatePath = path.join(__dirname, template);
+	const copySource = ["**"];
+
+	if (template === "normal") {
+		copySource.push("!tailwind.config.js", "!postcss.config.js");
+	}
+
+	await copy(copySource, root, {
+		cwd: templatePath,
+		rename(name) {
+			switch (name) {
+				case "gitignore":
+				case "eslintrc.cjs":
+					return `.${name}`;
+				case "README-template.md": {
+					return "README.md";
+				}
+				default:
+					return name;
+			}
+		},
+	});
+
+	// const tsconfigFile = path.join(root, "tsconfig.json");
+	const version = "1.0.0";
+
+	const packageJson: any = {
+		name: appName,
+		version,
+		private: true,
+		type: "module",
+		scripts: {
+			dev: "vite",
+			build: "tsc && vite build",
+			lint: "eslint --fix . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+			preview: "vite preview",
+			prepare: "husky",
+		},
+		dependencies: {
+			"@types/node": "^20.12.7",
+			axios: "^1.6.8",
+			react: "^18.2.0",
+			"react-dom": "^18.2.0",
+			"react-router": "^6.22.3",
+			"react-router-dom": "^6.22.3",
+		},
+		devDependencies: {
+			"@types/react": "^18.2.66",
+			"@types/react-dom": "^18.2.22",
+			"@typescript-eslint/eslint-plugin": "^7.2.0",
+			"@typescript-eslint/parser": "^7.2.0",
+			"@vitejs/plugin-react": "^4.2.1",
+			eslint: "^8.57.0",
+			"eslint-config-prettier": "^9.1.0",
+			"eslint-plugin-prettier": "^5.1.3",
+			"eslint-plugin-react-hooks": "^4.6.0",
+			"eslint-plugin-react-refresh": "^0.4.6",
+			husky: "^9.0.11",
+			prettier: "3.2.5",
+			typescript: "^5.2.2",
+			vite: "^5.2.0",
+		},
+	};
+
+	await writeFile(
+		path.join(root, "package.json"),
+		JSON.stringify(packageJson, null, 2) + os.EOL
+	);
+
+	info("\nInstalling dependencies:");
+	for (const dependency in packageJson.dependencies) {
+		console.log(`- ${cyan(dependency)}`);
+	}
+	info("\nInstalling devDependencies:");
+	for (const dependency in packageJson.devDependencies) {
+		console.log(`- ${cyan(dependency)}`);
+	}
+	br();
+
+	await install(packageManager);
+};
