@@ -4,7 +4,6 @@ import { RouterProvider } from "react-router-dom";
 function App() {
 	return (
 		<>
-			App
 			<RouterProvider router={router} />
 		</>
 	);

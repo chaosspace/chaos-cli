@@ -61,7 +61,6 @@ export const installTemplate = async ({
 			prepare: "husky",
 		},
 		dependencies: {
-			"@types/node": "^20.12.7",
 			axios: "^1.6.8",
 			react: "^18.2.0",
 			"react-dom": "^18.2.0",
@@ -69,6 +68,7 @@ export const installTemplate = async ({
 			"react-router-dom": "^6.22.3",
 		},
 		devDependencies: {
+			"@types/node": "^20.12.11",
 			"@types/react": "^18.2.66",
 			"@types/react-dom": "^18.2.22",
 			"@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -85,6 +85,16 @@ export const installTemplate = async ({
 			vite: "^5.2.0",
 		},
 	};
+
+	if (template === "tailwind") {
+		packageJson.devDependencies = {
+			...packageJson.devDependencies,
+			autoprefixer: "^10.4.19",
+			postcss: "^8.4.38",
+			"prettier-plugin-tailwindcss": "^0.5.14",
+			tailwindcss: "^3.4.3",
+		};
+	}
 
 	await writeFile(
 		path.join(root, "package.json"),

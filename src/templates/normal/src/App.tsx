@@ -6,7 +6,6 @@ function App() {
 	return (
 		<>
 			<Toaster />
-			<div>App</div>
 			<RouterProvider router={router} />
 		</>
 	);

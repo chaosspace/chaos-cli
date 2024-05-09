@@ -16,3 +16,36 @@ a {
 	padding: 0;
 	margin: 0;
 }
+
+main {
+	padding: 5rem;
+	text-align: center;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #f9f9f9;
+	font-family: Arial, sans-serif;
+}
+
+.title {
+	font-size: 2.5rem;
+	color: #333;
+	margin-bottom: 1rem;
+}
+
+.description {
+	font-size: 1.2rem;
+	color: #666;
+}
+
+footer {
+	margin-top: auto;
+	text-align: center;
+	padding: 1rem 0;
+	background-color: #333;
+	color: #fff;
+	width: 100%;
+}

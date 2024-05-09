@@ -1,18 +1,3 @@
-html,
-body {
-	margin: 0;
-}
-
-a {
-	text-decoration: none;
-	color: inherit;
-	background-color: transparent;
-	-webkit-text-decoration-skip: objects;
-	font-family: inherit;
-	font-size: inherit;
-	font-weight: inherit;
-	line-height: inherit;
-	border: none;
-	padding: 0;
-	margin: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
