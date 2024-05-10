@@ -1,5 +1,5 @@
 {
-	"name": "chaos-cli",
+	"name": "chaos-template-cli",
 	"version": "1.0.0",
 	"description": "",
 	"main": "src/cli.ts",
@@ -8,7 +8,7 @@
 		"build": "tsup-node --minify"
 	},
 	"bin": {
-		"chaos": "dist/cli.js"
+		"chaos": "dist/index.js"
 	},
 	"keywords": [],
 	"author": "chaosspace",
