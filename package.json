@@ -2,17 +2,17 @@
 	"name": "chaos-cli",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "src/cli.ts",
 	"scripts": {
 		"start": "tsup src/cli.ts --watch",
-		"build": "tsup --minify",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "tsup-node --minify"
 	},
 	"bin": {
 		"chaos": "dist/cli.js"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "chaosspace",
+	"type": "module",
 	"license": "ISC",
 	"dependencies": {
 		"cac": "^6.7.14",

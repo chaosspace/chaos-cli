@@ -74,6 +74,8 @@ export default async function createProject(
 			tailwind: decisions.useTailwind,
 		});
 	} catch (err) {
+		console.log(err);
+
 		error("crashed when downloading packages, please try again");
 	}
 }

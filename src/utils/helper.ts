@@ -1,6 +1,6 @@
 import { statSync, promises } from "fs";
 import path from "path";
-import { async as glob } from "fast-glob";
+import fg from "fast-glob";
 import { fileURLToPath } from "url";
 import spawn from "cross-spawn";
 
@@ -102,7 +102,7 @@ export const copy = async (
 		throw new TypeError("`src` and `dest` are required");
 	}
 
-	const sourceFile = await glob(source, {
+	const sourceFile = await fg.async(source, {
 		cwd,
 		dot: true,
 		absolute: false,

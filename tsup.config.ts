@@ -5,6 +5,7 @@ export default defineConfig({
 		index: "src/cli.ts",
 	},
 	format: ["esm"],
+	shims: true,
 	target: "esnext",
 	sourcemap: true,
 	outDir: "dist",
