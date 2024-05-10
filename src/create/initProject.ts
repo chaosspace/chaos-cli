@@ -3,8 +3,9 @@ import { PackageManager } from "../utils/helper";
 import { isWriteable } from "../utils/validation";
 import { br, error, info, loggger, succ } from "../utils/logger";
 import { mkdirSync } from "fs";
-import { installTemplate } from "../templates";
+import { installTemplate } from "./installTemplate";
 import { tryGitInit } from "../utils/git";
+import { cwd } from "process";
 
 interface InitProjectFun {
 	({}: {
@@ -61,4 +62,6 @@ export const initProject: InitProjectFun = async ({
 	br();
 	info(`  ${packageManager} build to build the App for production.`);
 	br();
+
+	process.chdir(`${process.cwd()}/${appName}`);
 };
