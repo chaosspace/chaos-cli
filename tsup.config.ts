@@ -8,6 +8,5 @@ export default defineConfig({
 	shims: true,
 	target: "esnext",
 	publicDir: "src/templates",
-	sourcemap: true,
 	outDir: "dist",
 });
