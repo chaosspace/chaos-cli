@@ -2,7 +2,7 @@ import prompts, { Options } from "prompts";
 import { error, info, succ } from "../utils/logger";
 import path from "path";
 import { existsSync } from "fs";
-import { isFolderEmpty } from "../utils/validation";
+import { isFolderEmpty, validateAppName } from "../utils/validation";
 import { getPkgManager } from "../utils/helper";
 import { initProject } from "./initProject";
 
@@ -47,6 +47,10 @@ export default async function createProject(
 		decisions.projectName = project;
 	}
 
+	if (!validateAppName(decisions.projectName!)) {
+		process.exit(1);
+	}
+	
 	if (!tailwind) {
 		const { tailwind } = await prompts(
 			{
