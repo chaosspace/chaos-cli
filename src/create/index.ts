@@ -32,7 +32,7 @@ export default async function createProject(
 	projectName: string | undefined,
 	{ tailwind }: { tailwind: boolean }
 ) {
-	const decisions = { projectName: "", useTailwind: tailwind };
+	const decisions = { projectName, useTailwind: tailwind };
 
 	if (!projectName) {
 		const { project } = await prompts(
@@ -63,7 +63,7 @@ export default async function createProject(
 	}
 
 	succ("resolve config successfully!");
-	const resolvedProjectPath = resolveProjectPath(decisions.projectName);
+	const resolvedProjectPath = resolveProjectPath(decisions.projectName!);
 
 	const packageManager = getPkgManager();
 
@@ -76,6 +76,4 @@ export default async function createProject(
 	} catch (err) {
 		error("crashed when downloading packages, please try again");
 	}
-
-	info("fetching packages!");
 }
