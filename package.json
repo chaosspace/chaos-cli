@@ -5,7 +5,8 @@
 	"main": "src/cli.ts",
 	"scripts": {
 		"start": "tsup src/cli.ts --watch",
-		"build": "tsup-node --minify"
+		"build": "tsup-node --minify",
+		"test": ""
 	},
 	"bin": {
 		"chaos": "dist/index.js"
