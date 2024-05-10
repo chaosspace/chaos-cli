@@ -11,12 +11,24 @@ importers:
       cac:
         specifier: ^6.7.14
         version: 6.7.14
+      cross-spawn:
+        specifier: ^7.0.3
+        version: 7.0.3
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
+      locate-path:
+        specifier: ^7.2.0
+        version: 7.2.0
       ora:
         specifier: ^8.0.1
         version: 8.0.1
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
+      prompts:
+        specifier: ^2.4.2
+        version: 2.4.2
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(typescript@5.4.5)
@@ -30,18 +42,6 @@ importers:
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
-      cross-spawn:
-        specifier: ^7.0.3
-        version: 7.0.3
-      fast-glob:
-        specifier: ^3.3.2
-        version: 3.3.2
-      locate-path:
-        specifier: ^7.2.0
-        version: 7.2.0
-      prompts:
-        specifier: ^2.4.2
-        version: 2.4.2
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
