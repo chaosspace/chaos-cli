@@ -1,15 +1,15 @@
-import { red, underline, green, blue } from "picocolors";
+import pc from "picocolors";
 
 export const info = (text: string) => {
-	console.log(blue(text));
+	console.log(pc.blue(text));
 };
 
 export const error = (text: string) => {
-	console.log(red(text));
+	console.log(pc.red(text));
 };
 
 export const succ = (text: string) => {
-	console.log(green(text));
+	console.log(pc.green(text));
 };
 
 export const br = () => {

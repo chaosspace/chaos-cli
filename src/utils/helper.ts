@@ -128,7 +128,7 @@ export const copy = async (
 export const install = async (
 	packageManager: PackageManager
 ): Promise<void> => {
-	const args = ["install"];
+	const args = [packageManager === "yarn" ? "" : "install"];
 	return new Promise((resolve, reject) => {
 		const child = spawn(packageManager, args, {
 			stdio: "inherit",

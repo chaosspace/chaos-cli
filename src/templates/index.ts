@@ -3,7 +3,8 @@ import { PackageManager, copy, install } from "../utils/helper";
 import { br, info } from "../utils/logger";
 import { writeFile } from "fs/promises";
 import os from "node:os";
-import { cyan } from "picocolors";
+import pc from "picocolors";
+// import ora from "ora";
 
 interface InstallTemplateArgs {
 	appName: string;
@@ -103,11 +104,11 @@ export const installTemplate = async ({
 
 	info("\nInstalling dependencies:");
 	for (const dependency in packageJson.dependencies) {
-		console.log(`- ${cyan(dependency)}`);
+		console.log(`- ${pc.cyan(dependency)}`);
 	}
 	info("\nInstalling devDependencies:");
 	for (const dependency in packageJson.devDependencies) {
-		console.log(`- ${cyan(dependency)}`);
+		console.log(`- ${pc.cyan(dependency)}`);
 	}
 	br();
 

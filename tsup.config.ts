@@ -5,8 +5,7 @@ export default defineConfig({
 		index: "src/cli.ts",
 	},
 	format: ["esm"],
-	// 目标语法
-	target: "es2020",
+	target: "esnext",
 	sourcemap: true,
 	outDir: "dist",
 });
