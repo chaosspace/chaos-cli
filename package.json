@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "tsup src/cli.ts --watch",
 		"build": "tsup-node --minify",
-		"test": ""
+		"test": "echo 'no test specified'"
 	},
 	"bin": {
 		"chaos": "dist/index.js"
