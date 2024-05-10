@@ -48,7 +48,6 @@ export const installTemplate = async ({
 
 	// const tsconfigFile = path.join(root, "tsconfig.json");
 	const version = "1.0.0";
-
 	const packageJson: any = {
 		name: appName,
 		version,
