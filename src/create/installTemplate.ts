@@ -11,6 +11,7 @@ interface InstallTemplateArgs {
 	root: string;
 	template: "tailwind" | "normal";
 	packageManager: PackageManager;
+	alias?: string;
 }
 
 export const installTemplate = async ({
@@ -18,6 +19,7 @@ export const installTemplate = async ({
 	root,
 	template,
 	packageManager,
+	alias,
 }: InstallTemplateArgs) => {
 	info(`Using ${packageManager}`);
 	br();
@@ -47,6 +49,7 @@ export const installTemplate = async ({
 				}
 			},
 		});
+		spinner.succeed("Succeed to pull template to local");
 	} catch {
 		spinner.fail("Fail to pull template to local, please try again!");
 	}
@@ -115,7 +118,6 @@ export const installTemplate = async ({
 		console.log(`- ${pc.cyan(dependency)}`);
 	}
 
-	spinner.succeed("Succeed to pull template to local");
 	br();
 
 	await install(packageManager);

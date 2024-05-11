@@ -6,12 +6,17 @@ import { isFolderEmpty, validateAppName } from "../utils/validation.js";
 import { getPkgManager } from "../utils/helper.js";
 import { initProject } from "./initProject.js";
 
+interface Decisions {
+	alias?: string;
+	projectName: string | undefined;
+	useTailwind: boolean;
+	initGit: boolean;
+}
+
 const onCancel: Options["onCancel"] = (prompt) => {
 	error(`Command cancelled when setting ${prompt.name as string}`);
 	process.exit(1);
 };
-
-const onSubmit: Options["onSubmit"] = (prompt, answer, answers) => {};
 
 const resolveProjectPath = (inputPath: string) => {
 	const root = path.resolve(inputPath.trim());
@@ -32,7 +37,11 @@ export default async function createProject(
 	projectName: string | undefined,
 	{ tailwind }: { tailwind: boolean }
 ) {
-	const decisions = { projectName, useTailwind: tailwind };
+	const decisions: Decisions = {
+		projectName,
+		useTailwind: tailwind,
+		initGit: true,
+	};
 
 	if (!projectName) {
 		const { project } = await prompts(
@@ -63,21 +72,59 @@ export default async function createProject(
 				active: "yes",
 				inactive: "no",
 			},
-			{ onCancel, onSubmit }
+			{ onCancel }
 		);
 		decisions.useTailwind = tailwind;
 	}
 
-	succ("resolve config successfully!");
+	const { useAlias } = await prompts(
+		{
+			type: "toggle",
+			name: "useAlias",
+			message: "Would you like to use import alias?",
+			initial: true,
+			active: "yes",
+			inactive: "no",
+		},
+		{ onCancel }
+	);
+
+	if (useAlias) {
+		const { alias } = await prompts(
+			{
+				type: "text",
+				name: "alias",
+				message: "What import alias do you want:",
+				initial: "@/",
+			},
+			{ onCancel }
+		);
+		decisions.alias = alias;
+	}
+
+	const { initGit } = await prompts(
+		{
+			type: "toggle",
+			name: "initGit",
+			message: "Would you like to init a git repo?",
+			initial: true,
+			active: "yes",
+			inactive: "no",
+		},
+		{ onCancel }
+	);
+
+	decisions.initGit = initGit;
+
 	const resolvedProjectPath = resolveProjectPath(decisions.projectName!);
 
 	const packageManager = getPkgManager();
 
 	try {
 		await initProject({
-			projectPath: resolvedProjectPath,
+			...decisions,
 			packageManager,
-			tailwind: decisions.useTailwind,
+			projectPath: resolvedProjectPath,
 		});
 	} catch (err) {
 		console.log(err);

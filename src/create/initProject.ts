@@ -5,22 +5,23 @@ import { br, error, info, loggger, succ } from "../utils/logger.js";
 import { mkdirSync } from "fs";
 import { installTemplate } from "./installTemplate.js";
 import { tryGitInit } from "../utils/git.js";
-import { cwd } from "process";
 
-interface InitProjectFun {
-	({}: {
-		projectPath: string;
-		tailwind: boolean;
-		packageManager: PackageManager;
-	}): Promise<void>;
+interface Params {
+	projectPath: string;
+	packageManager: PackageManager;
+	useTailwind: boolean;
+	initGit: boolean;
+	alias?: string;
 }
 
-export const initProject: InitProjectFun = async ({
+export const initProject = async ({
 	projectPath,
-	tailwind,
+	useTailwind,
 	packageManager,
-}) => {
-	const template = tailwind ? "tailwind" : "normal";
+	initGit,
+	alias,
+}: Params) => {
+	const template = useTailwind ? "tailwind" : "normal";
 	const root = path.resolve(projectPath);
 	if (!(await isWriteable(dirname(root)))) {
 		error(
@@ -48,9 +49,10 @@ export const initProject: InitProjectFun = async ({
 		root,
 		template,
 		packageManager,
+		alias
 	});
 
-	if (tryGitInit(root)) {
+	if (initGit && tryGitInit(root)) {
 		info("Initialized a git repository.");
 		br();
 	}
@@ -62,6 +64,4 @@ export const initProject: InitProjectFun = async ({
 	br();
 	info(`  ${packageManager} build to build the App for production.`);
 	br();
-
-	process.chdir(`${process.cwd()}`);
 };
