@@ -48,9 +48,11 @@ export default async function createProject(
 	}
 
 	if (!validateAppName(decisions.projectName!)) {
+		console.log(1);
+
 		process.exit(1);
 	}
-	
+
 	if (!tailwind) {
 		const { tailwind } = await prompts(
 			{

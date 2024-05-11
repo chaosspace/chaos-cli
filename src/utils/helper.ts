@@ -139,6 +139,9 @@ export const install = async (
 				DISABLE_OPENCOLLECTIVE: "1",
 			},
 		});
+		child.stdout?.on("data", (data) => {
+			console.log(data);
+		});
 		child.on("close", (code) => {
 			if (code !== 0) {
 				reject({ command: `${packageManager} ${args.join(" ")}` });

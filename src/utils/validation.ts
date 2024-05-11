@@ -17,25 +17,31 @@ export const validateAppName = (projectName: string) => {
 
 	if (projectName.match(/^\./)) {
 		error("App name cannot start with a period");
+		return false;
 	}
 
 	if (projectName.match(/^_/)) {
 		error("App name cannot start with an underscore");
+		return false;
 	}
 
 	if (projectName.trim() !== projectName) {
 		error("name cannot contain leading or trailing spaces");
+		return false;
 	}
 
 	blacklist.forEach(function (blacklistedName) {
 		if (projectName.toLowerCase() === blacklistedName) {
 			error(blacklistedName + " is a blacklisted name");
+			return false;
 		}
 	});
 
 	if (/[~'!()*%&]/.test(projectName.split("/").slice(-1)[0])) {
 		error('name can no longer contain special characters ("~\'!()*%&")');
+		return false;
 	}
+	return true;
 };
 
 export const isFolderEmpty = (rootPath: string, projectName: string) => {
