@@ -1,10 +1,10 @@
 import path, { dirname } from "path";
-import { PackageManager } from "../utils/helper";
-import { isWriteable } from "../utils/validation";
-import { br, error, info, loggger, succ } from "../utils/logger";
+import { PackageManager } from "../utils/helper.js";
+import { isWriteable } from "../utils/validation.js";
+import { br, error, info, loggger, succ } from "../utils/logger.js";
 import { mkdirSync } from "fs";
-import { installTemplate } from "./installTemplate";
-import { tryGitInit } from "../utils/git";
+import { installTemplate } from "./installTemplate.js";
+import { tryGitInit } from "../utils/git.js";
 import { cwd } from "process";
 
 interface InitProjectFun {

@@ -1,6 +1,6 @@
 import path from "path";
-import { PackageManager, copy, install } from "../utils/helper";
-import { br, info } from "../utils/logger";
+import { PackageManager, copy, install } from "../utils/helper.js";
+import { br, info } from "../utils/logger.js";
 import { writeFile } from "fs/promises";
 import os from "node:os";
 import pc from "picocolors";

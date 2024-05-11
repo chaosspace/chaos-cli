@@ -1,5 +1,5 @@
-import cac from "cac";
-import createProject from "./create";
+import { cac } from "cac";
+import createProject from "./create/index.js";
 import packageJson from "../package.json";
 
 const cli = cac();

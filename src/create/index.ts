@@ -1,10 +1,10 @@
 import prompts, { Options } from "prompts";
-import { error, info, succ } from "../utils/logger";
+import { error, info, succ } from "../utils/logger.js";
 import path from "path";
 import { existsSync } from "fs";
-import { isFolderEmpty, validateAppName } from "../utils/validation";
-import { getPkgManager } from "../utils/helper";
-import { initProject } from "./initProject";
+import { isFolderEmpty, validateAppName } from "../utils/validation.js";
+import { getPkgManager } from "../utils/helper.js";
+import { initProject } from "./initProject.js";
 
 const onCancel: Options["onCancel"] = (prompt) => {
 	error(`Command cancelled when setting ${prompt.name as string}`);

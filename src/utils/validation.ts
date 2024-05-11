@@ -1,5 +1,5 @@
 import { lstatSync, readdirSync, promises, constants } from "fs";
-import { br, error, info, loggger } from "./logger";
+import { br, error, info, loggger } from "./logger.js";
 import path from "path";
 
 const blacklist = ["node_modules", "favicon.ico"];
