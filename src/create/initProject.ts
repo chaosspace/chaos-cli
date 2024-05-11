@@ -63,5 +63,5 @@ export const initProject: InitProjectFun = async ({
 	info(`  ${packageManager} build to build the App for production.`);
 	br();
 
-	process.chdir(`${process.cwd()}}`);
+	process.chdir(`${process.cwd()}`);
 };
