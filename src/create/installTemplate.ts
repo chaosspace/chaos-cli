@@ -4,7 +4,7 @@ import { br, info } from "../utils/logger.js";
 import { writeFile } from "fs/promises";
 import os from "node:os";
 import pc from "picocolors";
-// import ora from "ora";
+import ora from "ora";
 
 interface InstallTemplateArgs {
 	appName: string;
@@ -23,6 +23,7 @@ export const installTemplate = async ({
 	br();
 	info(`Initializing project with template: ${template}\n`);
 
+	const spinner = ora("Pulling template").start();
 	const templatePath = path.join(__dirname, template);
 	const copySource = ["**"];
 
@@ -30,21 +31,25 @@ export const installTemplate = async ({
 		copySource.push("!tailwind.config.js", "!postcss.config.js");
 	}
 
-	await copy(copySource, root, {
-		cwd: templatePath,
-		rename(name) {
-			switch (name) {
-				case "gitignore":
-				case "eslintrc.cjs":
-					return `.${name}`;
-				case "README-template.md": {
-					return "README.md";
+	try {
+		await copy(copySource, root, {
+			cwd: templatePath,
+			rename(name) {
+				switch (name) {
+					case "gitignore":
+					case "eslintrc.cjs":
+						return `.${name}`;
+					case "README-template.md": {
+						return "README.md";
+					}
+					default:
+						return name;
 				}
-				default:
-					return name;
-			}
-		},
-	});
+			},
+		});
+	} catch {
+		spinner.fail("Fail to pull template to local, please try again!");
+	}
 
 	// const tsconfigFile = path.join(root, "tsconfig.json");
 	const version = "1.0.0";
@@ -109,6 +114,8 @@ export const installTemplate = async ({
 	for (const dependency in packageJson.devDependencies) {
 		console.log(`- ${pc.cyan(dependency)}`);
 	}
+
+	spinner.succeed("Succeed to pull template to local");
 	br();
 
 	await install(packageManager);
