@@ -29,10 +29,8 @@ This cli provides you Two choices
 
 More features will be mount later
 
-If you have any question, feel free to contact with at [https://github.com/chaosspace/chaos-cli/issues](https://)
-
 Todos:
 
-1. github workflow
-2. custom import alias
+1. ~~custom import alias~~  Done
+2. automatically create a git repo
 3. more...

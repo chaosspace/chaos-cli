@@ -1,17 +1,19 @@
 import path from "path";
 import { PackageManager, copy, install } from "../utils/helper.js";
 import { br, info } from "../utils/logger.js";
-import { writeFile } from "fs/promises";
 import os from "node:os";
 import pc from "picocolors";
 import ora from "ora";
+import { Sema } from "async-sema";
+import fg from "fast-glob";
+import { stat, writeFile, readFile } from "fs/promises";
 
 interface InstallTemplateArgs {
 	appName: string;
 	root: string;
 	template: "tailwind" | "normal";
 	packageManager: PackageManager;
-	alias?: string;
+	alias: string;
 }
 
 export const installTemplate = async ({
@@ -52,9 +54,49 @@ export const installTemplate = async ({
 		spinner.succeed("Succeed to pull template to local");
 	} catch {
 		spinner.fail("Fail to pull template to local, please try again!");
+		process.exit(1);
 	}
 
-	// const tsconfigFile = path.join(root, "tsconfig.json");
+	if (alias !== "@/*") {
+		const tsConfigFile = path.join(root, "tsconfig.json");
+		await writeFile(
+			tsConfigFile,
+			(await readFile(tsConfigFile, "utf8")).replace('"@/*"', `"${alias}"`)
+		);
+
+		const viteConfigFile = path.join(root, "vite.config.ts");
+		const aliasWithNoSlash = alias.replace("/*", "");
+		await writeFile(
+			viteConfigFile,
+			(
+				await readFile(viteConfigFile, "utf8")
+			).replace("@/", `${aliasWithNoSlash}`)
+		);
+
+		const files = await fg.async("**/*", {
+			cwd: root,
+			dot: true,
+			stats: false,
+			ignore: ["tsconfig.json", ".git/**/*"],
+		});
+		const writeSema = new Sema(8, { capacity: files.length });
+		await Promise.all(
+			files.map(async (file: string) => {
+				await writeSema.acquire();
+				const filePath = path.join(root, file);
+				if ((await stat(filePath)).isFile()) {
+					await writeFile(
+						filePath,
+						(
+							await readFile(filePath, "utf8")
+						).replace("@/", `${alias.replace(/\*/g, "")}`)
+					);
+				}
+				writeSema.release();
+			})
+		);
+	}
+
 	const version = "1.0.0";
 	const packageJson: any = {
 		name: appName,
@@ -69,28 +111,28 @@ export const installTemplate = async ({
 			prepare: "husky",
 		},
 		dependencies: {
-			axios: "^1.6.8",
-			react: "^18.2.0",
-			"react-dom": "^18.2.0",
-			"react-router": "^6.22.3",
-			"react-router-dom": "^6.22.3",
+			axios: "^1.7.2",
+			react: "^18.3.1",
+			"react-dom": "^18.3.1",
+			"react-router": "^6.23.1",
+			"react-router-dom": "^6.23.1",
 		},
 		devDependencies: {
-			"@types/node": "^20.12.11",
-			"@types/react": "^18.2.66",
-			"@types/react-dom": "^18.2.22",
-			"@typescript-eslint/eslint-plugin": "^7.2.0",
-			"@typescript-eslint/parser": "^7.2.0",
-			"@vitejs/plugin-react": "^4.2.1",
+			"@types/node": "^20.12.13",
+			"@types/react": "^18.3.3",
+			"@types/react-dom": "^18.3.0",
+			"@typescript-eslint/eslint-plugin": "^7.11.0",
+			"@typescript-eslint/parser": "^7.11.0",
+			"@vitejs/plugin-react": "^4.3.0",
 			eslint: "^8.57.0",
 			"eslint-config-prettier": "^9.1.0",
 			"eslint-plugin-prettier": "^5.1.3",
-			"eslint-plugin-react-hooks": "^4.6.0",
-			"eslint-plugin-react-refresh": "^0.4.6",
+			"eslint-plugin-react-hooks": "^4.6.2",
+			"eslint-plugin-react-refresh": "^0.4.7",
 			husky: "^9.0.11",
 			prettier: "3.2.5",
-			typescript: "^5.2.2",
-			vite: "^5.2.0",
+			typescript: "^5.4.5",
+			vite: "^5.2.12",
 		},
 	};
 

@@ -11,7 +11,7 @@ interface Params {
 	packageManager: PackageManager;
 	useTailwind: boolean;
 	initGit: boolean;
-	alias?: string;
+	alias: string;
 }
 
 export const initProject = async ({
@@ -52,10 +52,10 @@ export const initProject = async ({
 		alias
 	});
 
-	if (initGit && tryGitInit(root)) {
-		info("Initialized a git repository.");
-		br();
-	}
+	// if (initGit && tryGitInit(root)) {
+	// 	info("Initialized a git repository.");
+	// 	br();
+	// }
 
 	succ(`Project ${appName} set up successfully`);
 	br();

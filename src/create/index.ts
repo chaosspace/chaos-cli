@@ -7,7 +7,7 @@ import { getPkgManager } from "../utils/helper.js";
 import { initProject } from "./initProject.js";
 
 interface Decisions {
-	alias?: string;
+	alias: string;
 	projectName: string | undefined;
 	useTailwind: boolean;
 	initGit: boolean;
@@ -41,6 +41,7 @@ export default async function createProject(
 		projectName,
 		useTailwind: tailwind,
 		initGit: true,
+		alias: "@/*",
 	};
 
 	if (!projectName) {
@@ -57,8 +58,6 @@ export default async function createProject(
 	}
 
 	if (!validateAppName(decisions.projectName!)) {
-		console.log(1);
-
 		process.exit(1);
 	}
 
@@ -89,13 +88,18 @@ export default async function createProject(
 		{ onCancel }
 	);
 
+	const importAliasPattern = /^[^*"]+\/\*\s*$/;
 	if (useAlias) {
 		const { alias } = await prompts(
 			{
 				type: "text",
 				name: "alias",
 				message: "What import alias do you want:",
-				initial: "@/",
+				initial: "@/*",
+				validate: (value) =>
+					importAliasPattern.test(value)
+						? true
+						: "Import alias must follow the pattern <prefix>/*",
 			},
 			{ onCancel }
 		);
