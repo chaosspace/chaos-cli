@@ -162,5 +162,5 @@ export const installTemplate = async ({
 
 	br();
 
-	// await install(packageManager);
+	await install(packageManager);
 };

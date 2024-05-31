@@ -12,6 +12,9 @@
 	"bin": {
 		"chaos": "dist/index.js"
 	},
+	"files": [
+		"dist"
+	],
 	"keywords": [],
 	"author": "chaosspace",
 	"type": "module",
