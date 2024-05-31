@@ -1,7 +1,9 @@
 node_modules/
 *.yaml
-src/
 tsup.config.
 .husky
+LICENSE
+tsup.config.ts
+tsconfig.json
 
 !templates/src

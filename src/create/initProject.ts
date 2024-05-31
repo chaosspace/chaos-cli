@@ -41,9 +41,6 @@ export const initProject = async ({
 
 	process.chdir(root);
 
-	// const packageJsonPath = path.join(root, "package.json");
-	// let hasPackageJson = false;
-
 	await installTemplate({
 		appName,
 		root,
