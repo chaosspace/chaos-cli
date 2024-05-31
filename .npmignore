@@ -1,6 +1,6 @@
 node_modules/
 *.yaml
-/src
+src
 tsup.config.
 .husky
 
