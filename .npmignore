@@ -1,4 +1,7 @@
 node_modules/
 *.yaml
 /src
-tsup.config.ts
+tsup.config.
+.husky
+
+!templates/
