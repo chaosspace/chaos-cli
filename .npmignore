@@ -1,7 +1,7 @@
 node_modules/
 *.yaml
-src
+src/
 tsup.config.
 .husky
 
-!templates/
+!templates/src
