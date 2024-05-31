@@ -7,19 +7,19 @@ This is a learning demo, but it may help you set up React project quickly, with 
 Create a new project interactively by running
 
 ```shell
-npm i chaos-template-cli
+npm i chaos-template-cli -g
 # or
-yarn add chaos-template-cli
+yarn add chaos-template-cli -g
 # or
-pnpm add chaos-template-cli
+pnpm add chaos-template-cli -g
 ```
 
 then use it to create a new project
 
 ```shell
-npx chaos
+npx run chaos
 # or
-pn chaos
+pn exec chaos
 ```
 
 This cli provides you Two choices
@@ -31,6 +31,6 @@ More features will be mount later
 
 Todos:
 
-1. ~~custom import alias~~  Done
+1. ~~custom import alias~~ Done
 2. automatically create a git repo
 3. more...
