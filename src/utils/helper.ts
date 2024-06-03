@@ -12,14 +12,6 @@ interface CopyOption {
 	parents?: boolean;
 }
 
-const LOCKS: Record<string, PackageManager> = {
-	"bun.lockb": "bun",
-	"pnpm-lock.yaml": "pnpm",
-	"yarn.lock": "yarn",
-	"package-lock.json": "npm",
-	"npm-shrinkwrap.json": "npm",
-};
-
 const toPath = (urlOrPath: string | URL): string =>
 	urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
 
@@ -79,14 +71,6 @@ export function findUp(name: string | string[]) {
 	}
 
 	return matches[0];
-}
-
-export function getPkgManager(): PackageManager {
-	const lockPath = findUp(Object.keys(LOCKS));
-	let agent: PackageManager;
-	agent = LOCKS[path.basename(lockPath)];
-
-	return agent;
 }
 
 const identity = (x: string) => x;

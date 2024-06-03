@@ -1,9 +1,8 @@
 import prompts, { Options } from "prompts";
-import { error, info, succ } from "../utils/logger.js";
+import { error } from "../utils/logger.js";
 import path from "path";
 import { existsSync } from "fs";
 import { isFolderEmpty, validateAppName } from "../utils/validation.js";
-import { getPkgManager } from "../utils/helper.js";
 import { initProject } from "./initProject.js";
 
 interface Decisions {
@@ -56,6 +55,17 @@ export default async function createProject(
 		);
 		decisions.projectName = project;
 	}
+
+	const { packageManager } = await prompts({
+		type: "select",
+		name: "packageManager",
+		message: "Which package manager would you like to use?",
+		choices: [
+			{ title: "NPM", value: "npm" },
+			{ title: "YARN", value: "yarn" },
+			{ title: "PNPM", value: "pnpm" },
+		],
+	});
 
 	if (!validateAppName(decisions.projectName!)) {
 		process.exit(1);
@@ -121,8 +131,6 @@ export default async function createProject(
 	decisions.initGit = initGit;
 
 	const resolvedProjectPath = resolveProjectPath(decisions.projectName!);
-
-	const packageManager = getPkgManager();
 
 	try {
 		await initProject({
