@@ -70,7 +70,7 @@ export const installTemplate = async ({
 			viteConfigFile,
 			(
 				await readFile(viteConfigFile, "utf8")
-			).replace("@/", `${aliasWithNoSlash}`)
+			).replace("~", `${aliasWithNoSlash}`)
 		);
 
 		const files = await fg.async("**/*", {
