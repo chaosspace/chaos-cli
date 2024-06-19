@@ -46,13 +46,13 @@ export const initProject = async ({
 		root,
 		template,
 		packageManager,
-		alias
+		alias,
 	});
 
-	// if (initGit && tryGitInit(root)) {
-	// 	info("Initialized a git repository.");
-	// 	br();
-	// }
+	if (initGit && tryGitInit(root)) {
+		info("Initialized a git repository.");
+		br();
+	}
 
 	succ(`Project ${appName} set up successfully`);
 	br();

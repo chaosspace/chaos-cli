@@ -162,5 +162,15 @@ export const installTemplate = async ({
 
 	br();
 
-	await install(packageManager);
+	const indexHtmlPath = path.join(root, "index.html");
+	const originIndexHtml = await readFile(indexHtmlPath, "utf-8");
+	const capitializedAppName = appName.replace(/^(.)/, (matched) => {
+		return matched.toUpperCase();
+	});
+	await writeFile(
+		indexHtmlPath,
+		originIndexHtml.replace("ViteReactTemplate", capitializedAppName)
+	);
+
+	// await install(packageManager);
 };

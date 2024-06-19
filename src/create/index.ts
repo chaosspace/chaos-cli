@@ -55,6 +55,11 @@ export default async function createProject(
 		);
 		decisions.projectName = project;
 	}
+	const resolvedProjectPath = resolveProjectPath(decisions.projectName!);
+
+	if (!validateAppName(decisions.projectName!)) {
+		process.exit(1);
+	}
 
 	const { packageManager } = await prompts({
 		type: "select",
@@ -66,10 +71,6 @@ export default async function createProject(
 			{ title: "PNPM", value: "pnpm" },
 		],
 	});
-
-	if (!validateAppName(decisions.projectName!)) {
-		process.exit(1);
-	}
 
 	if (!tailwind) {
 		const { tailwind } = await prompts(
@@ -129,8 +130,6 @@ export default async function createProject(
 	);
 
 	decisions.initGit = initGit;
-
-	const resolvedProjectPath = resolveProjectPath(decisions.projectName!);
 
 	try {
 		await initProject({
